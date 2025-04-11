@@ -25,6 +25,8 @@ services:
         SECRET_KEY: ${SECRET_KEY}
     volumes:
       - jenkins_home:/var/jenkins_home
+      - ./jenkins/jenkins-admin-password.txt:/run/secrets/jenkins-admin-password:ro
+
     secrets:
       - jenkins-admin-password
     networks:
