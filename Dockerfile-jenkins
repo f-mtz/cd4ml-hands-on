@@ -9,7 +9,6 @@ RUN jenkins-plugin-cli --plugins     pollscm:1.3.1
 RUN jenkins-plugin-cli --plugins     eddsa-api:latest   
 RUN jenkins-plugin-cli --plugins     credentials     
 
-
 USER root
 
 
@@ -42,3 +41,4 @@ COPY jenkins/1-configureJenkins.groovy /usr/share/jenkins/ref/init.groovy.d/1-co
 COPY jenkins/2-addAccessKeys.groovy /usr/share/jenkins/ref/init.groovy.d/2-addAccessKeys.groovy
 
 ENV PATH="/opt/venv/bin:$PATH"
+

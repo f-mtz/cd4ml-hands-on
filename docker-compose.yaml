@@ -25,7 +25,7 @@ services:
         SECRET_KEY: ${SECRET_KEY}
     volumes:
       - jenkins_home:/var/jenkins_home
-      - ./jenkins/jenkins-admin-password.txt:/run/secrets/jenkins-admin-password:ro
+      # - ./jenkins/jenkins-admin-password.txt:/run/secrets/jenkins-admin-password:ro
 
     secrets:
       - jenkins-admin-password
@@ -79,7 +79,7 @@ services:
     image: ericnaglertw/cd4ml-fluentd:1
     container_name: fluentd
     volumes:
-      - ./fluentd/conf:/fluentd/etc
+      - ./fluentd/etc:/fluentd/conf
     ports:
       - "24224:24224"
     networks:
@@ -149,13 +149,19 @@ services:
     image: jupyter/minimal-notebook:54462805efcb
     environment:
       - JUPYTER_ENABLE_LAB=yes
+      - NB_UID=${UID:-1000}  # Usa o UID do host ou 1000 como padrão
+      - NB_GID=${GID:-1000}  # Adicione isso para o grupo
+      - CHOWN_HOME=yes       # Isso fará o container ajustar as permissões
+      - CHOWN_HOME_OPTS=-R   # Aplicar recursivamente
+    user: root
     ports:
       - "8888:8888"
       - "8889:8888"
     entrypoint: "start.sh"
-    command: "jupyter lab --LabApp.token=''"
+    # command: "jupyter lab --LabApp.token=''"
+    command: start-notebook.sh --LabApp.token=''
     volumes:
-      - .:/home/jovyan/
+      - .:/home/jovyan/:rw
     networks:
       - jenkins_nw
     depends_on: 
