@@ -1,8 +1,8 @@
-FROM jenkins/jenkins:latest-jdk11
+FROM jenkins/jenkins:2.479.3-jdk17
 
 USER jenkins
 
-RUN jenkins-plugin-cli --plugins     blueocean:1.27.16     
+RUN jenkins-plugin-cli --plugins     blueocean:1.27.17     
 RUN jenkins-plugin-cli --plugins     build-timestamp:1.0.3     
 RUN jenkins-plugin-cli --plugins     timestamper:1.17     
 RUN jenkins-plugin-cli --plugins     pollscm:1.3.1     
